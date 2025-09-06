@@ -1,63 +1,37 @@
 import random
-import turtle
+print("WELCOM IN THE GAME")
+user_wins = 0
+computer_wins = 0
+options = ["rock", "paper", "scissors"]
 
-def jouer_turtle():
-    screen = turtle.Screen()
-    screen.title("Pierre-Papier-Ciseaux")
-    screen.bgcolor("lightblue")
-    pen = turtle.Turtle()
-    pen.hideturtle()
-    pen.penup()
-    pen.goto(0, 100)
-    pen.speed(0)
-    turtle.tracer(1, 80)  # السرعة بلا تأخير
+while True:
+    user_input = input("Type Rock/Paper/Scissors or Q to quit: ").lower()
+    if user_input == "q":
+        break
+    if user_input not in options:
+        print("Invalid input, try again!")
+        continue
 
+    random_number = random.randint(0, 2)
+    computer_pick = options[random_number]
+    print("Computer picked", computer_pick + ".")
 
-    choix_possibles = ["pierre", "papier", "ciseaux"]
-    pen.write("Bienvenue au jeu Pierre-Papier-Ciseaux !\nClique sur la fenêtre pour commencer.",
-              align="center", font=("Arial", 18, "bold"))
+    if user_input == "paper" and computer_pick == "rock":
+        print("You won!")
+        user_wins += 1
 
-    screen.onclick(lambda x, y: None)
+    elif user_input == "rock" and computer_pick == "scissors":
+        print("You won!")
+        user_wins += 1
 
-    while True:
-        pen.clear()
-        choix = "Choisissez: pierre, papier ou ciseaux (ou 'q' pour quitter)"
-        joueur = screen.textinput("Votre choix", choix)
+    elif user_input == "scissors" and computer_pick == "paper":
+        print("You won!")
+        user_wins += 1
 
-        if joueur is None or joueur.lower() == 'q':
-            pen.clear()
-            pen.write("Merci d'avoir joué ! À bientôt.", align="center", font=("Arial", 18, "normal"))
-            break
+    else:
+        print("You lost!")
+        computer_wins += 1
 
-        joueur = joueur.lower()
-        if joueur not in choix_possibles:
-            pen.clear()
-            pen.write("Choix invalide, essayez encore.", align="center", font=("Arial", 18, "normal"))
-            continue
-
-        ordinateur = random.choice(choix_possibles)
-        pen.clear()
-        pen.goto(0, 100)
-        pen.write(f"Vous avez choisi : {joueur}\nL'ordinateur a choisi : {ordinateur}",
-                  align="center", font=("Arial", 18, "normal"))
-
-        if joueur == ordinateur:
-            resultat = "C'est une égalité !"
-        elif (joueur == "pierre" and ordinateur == "ciseaux") or \
-             (joueur == "papier" and ordinateur == "pierre") or \
-             (joueur == "ciseaux" and ordinateur == "papier"):
-            resultat = "Vous avez gagné ! 🎉"
-        else:
-            resultat = "Vous avez perdu... 😢"
-
-        pen.goto(0, -20)
-        pen.write(resultat, align="center", font=("Arial", 22, "bold"))
-        pen.goto(0, -80)
-        pen.write("Cliquez sur OK pour continuer ou 'q' pour quitter.",
-                  align="center", font=("Arial", 14, "normal"))
-
-
-
-    screen.mainloop()
-
-jouer_turtle()
+print("You won", user_wins, "points.")
+print("The computer won", computer_wins, "points.")
+print("Goodbye!")
